@@ -9,10 +9,19 @@ ARG GIT_TAG
 WORKDIR /build/
 ADD . /build/
 
-# Assemble xule files
+# Assemble xule  plugin files
 RUN mkdir /build/xule/
+RUN mkdir /build/xule/rulesets/
 RUN cp -r /build/plugin/xule/ /build/
 RUN mv /build/xule/rulesetMap.json /build/xule/xuleRulesetMap.json
+
+# Assemble xule config files
+RUN cp -r /build/dqc_us_rules/resources/ /build/xule/resources/
+RUN rm -r /build/xule/resources/META-INF
+
+# Assemble xule rule sets
+RUN cp `find /build/dqc_us_rules/ -name \*.zip` /build/xule/rulesets/
+RUN rm -r /build/xule/rulesets/resources.zip
 
 # pypi package creation
 # The following command replaces the @VERSION@ string in setup.py with the tagged version number from GIT_TAG
