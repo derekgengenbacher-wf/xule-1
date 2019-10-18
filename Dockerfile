@@ -20,9 +20,7 @@ RUN cp -r /build/dqc_us_rules/resources/ /build/xule/resources/
 RUN rm -r /build/xule/resources/META-INF
 
 # Assemble xule rule sets
-WORKDIR /build/dqc_us_rules/
-RUN cp `find -name \*.zip` /build/xule/rulesets/
-WORKDIR /build/
+RUN cp `find /build/dqc_us_rules/ -name \*.zip` /build/xule/rulesets/
 RUN rm -r /build/xule/rulesets/resources.zip
 
 # pypi package creation
