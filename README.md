@@ -48,6 +48,12 @@ When new rules that have been approved for coding are released by the DQC, the r
   - The request will need to go through the Quality Assurance process defined below and receive a `+10` comment. This can be from another DQC member or XBRL US staff, including one of the reviewers.
   - At this point, the request can be submitted to one of the project maintainers to be merged.
 
+# Testing
+
+#### Docker Image
+
+The build of this library now produces a docker image. The docker image is meant for testing purposes. The docker image is just wf_arelle with the library from the build installed
+
 ## License and Patent
 
 See [License](https://xbrl.us/dqc-license) for license information.  
