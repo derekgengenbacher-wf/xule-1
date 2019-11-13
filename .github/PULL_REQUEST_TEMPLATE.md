@@ -1,13 +1,9 @@
-### Changes:
+#### Description
 
-- Change_one with reasoning
-- Change_two with reasoning ...
+#### Steps to Test
+Deploy to the **wf_arelle** services on wk-dev. Image is named **xule** but it is alright to deploy to the **wf_arelle** services.
 
-### Pull request process
+- Run and view diffs in [Spiceweasel](https://w-elzar.appspot.com/). Click [here](https://github.com/Workiva/w-elzar/blob/master/README.rst#running-spiceweasel) for instructions to run Spiceweasel.
 
-- [ ] Full description of changes provided above.
-- [ ] Reviewed by another person. (+1)
-- [ ] If this is a code change, reviewed by a second person. (+1)
-- [ ] QA'd to the specifications listed [here](https://github.com/DataQualityCommittee/dqc_us_rules#quality-assurance-qa-of-a-pull-request). Documentation only changes do not require the formal code quality assurance process. (+10)
-
-##### Once checklist is complete, @campbellpryde @marcward @davidtauriello please review for merge.
+**review**:
+@Workiva/xmas
