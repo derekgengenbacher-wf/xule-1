@@ -3,5 +3,5 @@ isodate==0.6.0
 aniso8601==8.0.0
 openpyxl==3.0.3
 regex==2020.2.20
-tabulate==0.8.6
+tabulate==0.8.7
 -e git+https://git@github.com/arelle/arelle.git@master#egg=Arelle
