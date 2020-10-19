@@ -1,4 +1,4 @@
-lxml==4.5.2
+lxml==4.6.1
 isodate==0.6.0
 aniso8601==8.0.0
 openpyxl==3.0.5
