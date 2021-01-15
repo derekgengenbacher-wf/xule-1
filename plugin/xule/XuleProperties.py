@@ -37,6 +37,11 @@ import numpy
 
 import json
 
+
+CONCEPT_LABEL_RELS = []
+CONCEPT_REFERENCE_RELS = []
+
+
 def property_union(xule_context, object_value, *args):
     other_set = args[0]
     return XuleUtility.add_sets(xule_context, object_value, other_set)
@@ -765,10 +770,13 @@ def property_label(xule_context, object_value, *args):
         return xv.XuleValue(xule_context, None, 'none')
     else:
         return xv.XuleValue(xule_context, label, 'label')
-     
+
+
 def get_label(xule_context, concept, base_label_type, base_lang):#label type
-    label_network = ModelRelationshipSet(concept.modelXbrl, CONCEPT_LABEL)
-    label_rels = label_network.fromModelObject(concept)
+    global CONCEPT_LABEL_RELS
+    if not CONCEPT_LABEL_RELS:
+        CONCEPT_LABEL_RELS = ModelRelationshipSet(concept.modelXbrl, CONCEPT_LABEL)
+    label_rels = CONCEPT_LABEL_RELS.fromModelObject(concept)
     if len(label_rels) > 0:
         #filter the labels
         label_by_type = dict()
@@ -837,6 +845,7 @@ def property_period_type(xule_context, object_value, *args):
     return xv.XuleValue(xule_context, object_value.value.periodType, 'string')
 
 def property_references(xule_context, object_value, *args):
+    global CONCEPT_REFERENCE_RELS
     #reference type
     if len(args) > 0:
         reference_type = args[0]
@@ -853,9 +862,10 @@ def property_references(xule_context, object_value, *args):
         concept = object_value.fact.concept
     else:
         concept = object_value.value
- 
-    reference_network = ModelRelationshipSet(concept.modelXbrl, CONCEPT_REFERENCE)
-    reference_rels = reference_network.fromModelObject(concept)
+
+    if not CONCEPT_REFERENCE_RELS:
+        CONCEPT_REFERENCE_RELS = ModelRelationshipSet(concept.modelXbrl, CONCEPT_REFERENCE)
+    reference_rels = CONCEPT_REFERENCE_RELS.fromModelObject(concept)
     if len(reference_rels) > 0:
         #filter the references
         reference_by_type = collections.defaultdict(list)
