@@ -838,7 +838,6 @@ def property_period_type(xule_context, object_value, *args):
     return xv.XuleValue(xule_context, object_value.value.periodType, 'string')
 
 def property_references(xule_context, object_value, *args):
-    global CONCEPT_REFERENCE_RELS
     #reference type
     if len(args) > 0:
         reference_type = args[0]
