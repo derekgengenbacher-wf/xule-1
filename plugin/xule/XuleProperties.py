@@ -1361,8 +1361,6 @@ def get_networks(xule_context, dts_value, arcrole=None, role=None, link=None, ar
             net = xv.XuleValue(xule_context, (network_info, relationship_set), 'network')
             #final_result_set.append(net)
             networks.add(net)
-            #final_result_set.append(net)
-            networks.add(net)
     #return final_result_set
     return frozenset(networks)
 
