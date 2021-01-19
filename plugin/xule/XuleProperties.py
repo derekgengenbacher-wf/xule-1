@@ -37,10 +37,6 @@ import numpy
 import json
 
 
-CONCEPT_LABEL_RELS = None
-CONCEPT_REFERENCE_RELS = None
-
-
 def property_union(xule_context, object_value, *args):
     other_set = args[0]
     return XuleUtility.add_sets(xule_context, object_value, other_set)
