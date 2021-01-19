@@ -28,7 +28,6 @@ from . import XuleValue as xv
 from . import XuleUtility 
 from . import XuleFunctions
 from arelle.ModelDocument import Type
-from arelle.ModelRelationshipSet import ModelRelationshipSet
 from arelle.ModelValue import QName
 import collections
 import decimal
@@ -773,10 +772,8 @@ def property_label(xule_context, object_value, *args):
 
 
 def get_label(xule_context, concept, base_label_type, base_lang):#label type
-    global CONCEPT_LABEL_RELS
-    if not CONCEPT_LABEL_RELS:
-        CONCEPT_LABEL_RELS = ModelRelationshipSet(concept.modelXbrl, CONCEPT_LABEL)
-    label_rels = CONCEPT_LABEL_RELS.fromModelObject(concept)
+    label_network = concept.modelXbrl.relationshipSet(CONCEPT_LABEL)
+    label_rels = label_network.fromModelObject(concept)
     if len(label_rels) > 0:
         #filter the labels
         label_by_type = dict()
@@ -863,9 +860,8 @@ def property_references(xule_context, object_value, *args):
     else:
         concept = object_value.value
 
-    if not CONCEPT_REFERENCE_RELS:
-        CONCEPT_REFERENCE_RELS = ModelRelationshipSet(concept.modelXbrl, CONCEPT_REFERENCE)
-    reference_rels = CONCEPT_REFERENCE_RELS.fromModelObject(concept)
+    reference_network = concept.modelXbrl.relationshipSet(CONCEPT_REFERENCE)
+    reference_rels = reference_network.fromModelObject(concept)
     if len(reference_rels) > 0:
         #filter the references
         reference_by_type = collections.defaultdict(list)
@@ -1063,14 +1059,13 @@ def property_arc_name(xule_context, object_value, *args):
 
 def property_network(xule_context, object_value, *args):
     network_info = (object_value.value.arcrole, object_value.value.linkrole, object_value.value.linkQname, object_value.value.qname, False)
-
-    network = (network_info, 
-               ModelRelationshipSet(object_value.value.modelXbrl, 
-                                    network_info[NETWORK_ARCROLE],
-                                    network_info[NETWORK_ROLE],
-                                    network_info[NETWORK_LINK],
-                                    network_info[NETWORK_ARC]))
-    
+    network_relationship_set = object_value.value.modelXbrl.relationshipSet(
+        network_info[NETWORK_ARCROLE],
+        network_info[NETWORK_ROLE],
+        network_info[NETWORK_LINK],
+        network_info[NETWORK_ARC]
+    )
+    network = (network_info, network_relationship_set)
     return xv.XuleValue(xule_context, network, 'network')
     
 def property_power(xule_context, object_value, *args):  
@@ -1359,21 +1354,17 @@ def get_networks(xule_context, dts_value, arcrole=None, role=None, link=None, ar
         '''I THINK THESE NETWORKS ARE REALLY COMBINATION OF NETWORKS, SO I AM IGNORING THEM.
            NEED TO CHECK IF THIS IS TRUE.'''
         if (network_info[NETWORK_ROLE] is not None and
-            network_info[NETWORK_LINK] is not None and
-            network_info[NETWORK_ARC] is not None):
-            
-            if network_info in dts.relationshipSets:
-                net = xv.XuleValue(xule_context, (network_info, dts.relationshipSets[network_info]), 'network')
-            else:
-                net = xv.XuleValue(xule_context, 
-                                (network_info, 
-                                    ModelRelationshipSet(dts, 
-                                               network_info[NETWORK_ARCROLE],
-                                               network_info[NETWORK_ROLE],
-                                               network_info[NETWORK_LINK],
-                                               network_info[NETWORK_ARC])),
-                                     'network')
-            
+                network_info[NETWORK_LINK] is not None and
+                network_info[NETWORK_ARC] is not None):
+            relationship_set = dts.relationshipSet(
+                network_info[NETWORK_ARCROLE],
+                network_info[NETWORK_ROLE],
+                network_info[NETWORK_LINK],
+                network_info[NETWORK_ARC]
+            )
+            net = xv.XuleValue(xule_context, (network_info, relationship_set), 'network')
+            #final_result_set.append(net)
+            networks.add(net)
             #final_result_set.append(net)
             networks.add(net)
     #return final_result_set
