@@ -38,8 +38,8 @@ import numpy
 import json
 
 
-CONCEPT_LABEL_RELS = []
-CONCEPT_REFERENCE_RELS = []
+CONCEPT_LABEL_RELS = None
+CONCEPT_REFERENCE_RELS = None
 
 
 def property_union(xule_context, object_value, *args):
