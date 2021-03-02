@@ -21,6 +21,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     install_requires=[
-        'aniso8601==8.1.1'
+        'aniso8601==9.0.1'
     ],
 )
