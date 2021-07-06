@@ -1,5 +1,18 @@
 from setuptools import setup, find_packages
 
+
+def get_requirements():
+    """
+    Get the requirements from a file.
+
+    :return: A list of requirements.
+    :rtype: list
+    """
+    with open('requirements.txt') as f:
+        requirements = f.read().splitlines()
+        return requirements
+
+
 setup(
     name='w_versioned_xule',
     version='@VERSION@',
@@ -20,7 +33,5 @@ setup(
         'Copyright :: XBRL US, Inc. :: 2019',
         'Programming Language :: Python :: 3.6',
     ],
-    install_requires=[
-        'aniso8601==9.0.1'
-    ],
+    install_requires=get_requirements(),
 )
