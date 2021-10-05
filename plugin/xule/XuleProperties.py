@@ -37,7 +37,6 @@ import math
 import numpy
 import re
 
-
 def property_union(xule_context, object_value, *args):
     other_set = args[0]
     return XuleUtility.add_sets(xule_context, object_value, other_set)
