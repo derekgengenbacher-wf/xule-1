@@ -6,4 +6,4 @@ openpyxl==3.0.9
 pyparsing==2.4.7
 regex
 tabulate>=0.8.9,<1.0.0
-lxml==4.6.5
+lxml==4.7.1
