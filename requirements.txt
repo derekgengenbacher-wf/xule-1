@@ -1,6 +1,6 @@
 aniso8601>=9.0.1,<10.0.0
 holidays==0.11.3.1
-isodate==0.6.0
+isodate==0.6.1
 numpy>=1.19.5,<1.20.0
 openpyxl==3.0.9
 pyparsing==2.4.7
