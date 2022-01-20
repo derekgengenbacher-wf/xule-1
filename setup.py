@@ -31,7 +31,7 @@ setup(
         'Copyright :: Vintage, a division of PR Newswire :: 2019',
         'Copyright :: Workiva Inc. :: 2019',
         'Copyright :: XBRL US, Inc. :: 2019',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.9',
     ],
     install_requires=get_requirements(),
 )
