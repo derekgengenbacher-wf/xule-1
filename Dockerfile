@@ -1,5 +1,7 @@
 FROM amazonlinux:2 as build
 
+ENV PYTHON_VERSION=3.9.9
+
 ARG PIP_INDEX_URL
 ARG NPM_CONFIG__AUTH
 ARG NPM_CONFIG_REGISTRY=https://workivaeast.jfrog.io/workivaeast/api/npm/npm-prod/
@@ -9,9 +11,25 @@ ARG GIT_TAG
 WORKDIR /build/
 ADD . /build/
 
-RUN yum install -y python3-devel && \
-    yum groupinstall -y "Development Tools" && \
-    rm -rf /var/cache/yum
+RUN yum install -y \
+        gcc \
+        openssl-devel \
+        bzip2-devel \
+        libffi-devel \
+        wget \
+        tar \
+        gzip \
+        make && \
+    rm -rf /var/cache/yum && \
+    # Download and install python manually
+    # This is because the amazonlinux yum registry is currently pinning to python 3.7
+    wget -nv https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
+    tar xzf Python-${PYTHON_VERSION}.tgz && \
+    cd Python-${PYTHON_VERSION} && \
+    ./configure --enable-optimizations && \
+    make install && \
+    rm -r ../Python-${PYTHON_VERSION} && \
+    rm ../Python-${PYTHON_VERSION}.tgz
 
 # Assemble xule  plugin files
 RUN mkdir /build/xule/
