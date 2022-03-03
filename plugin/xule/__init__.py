@@ -7,7 +7,7 @@ This is the package init file.
 DOCSKIP
 See https://xbrl.us/dqc-license for license information.  
 See https://xbrl.us/dqc-patent for patent infringement notice.
-Copyright (c) 2017 - 2022 XBRL US, Inc.
+Copyright (c) 2017 - 2021 XBRL US, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-$Change: 23339 $
+$Change: 23217 $
 DOCSKIP
 """
 from .XuleProcessor import process_xule
@@ -858,7 +858,8 @@ def xuleCompile(xule_file_names, ruleset_file_name, compile_type, max_recurse_de
 
 def runXule(cntlr, options, modelXbrl, rule_set_map=_xule_rule_set_map_name):
         try:
-            if getattr(options, "xule_multi", True) and getattr(cntlr, "rule_set", None) is not None:
+            if getattr(options, "xule_multi", True) and \
+                getattr(cntlr, "rule_set", None) is not None:
                 rule_set = getattr(cntlr, "rule_set")
             else:
                 if getattr(options, 'xule_rule_set', None) is not None:
