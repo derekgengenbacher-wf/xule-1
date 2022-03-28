@@ -523,7 +523,7 @@ def evaluate(rule_part, xule_context, trace_dependent=False, override_table_id=N
     
     This evaluator also includes capturing information about the evaluation for debugging purposes.
     """
-    if xule_context.iter_count > len(xule_context.global_context.model.factsInInstance):
+    if xule_context.iter_count > xule_context.global_context.maximum_iterations:
         raise XuleProcessingError('Rule has run too many iterations')
     
     try:
