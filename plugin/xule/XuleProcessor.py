@@ -7,7 +7,7 @@ The XuleProcessor module is the main module for processing a rule set against an
 DOCSKIP
 See https://xbrl.us/dqc-license for license information.  
 See https://xbrl.us/dqc-patent for patent infringement notice.
-Copyright (c) 2017 - 2021 XBRL US, Inc.
+Copyright (c) 2017 - 2022 XBRL US, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-$Change: 23301 $
+$Change: 23340 $
 DOCSKIP
 """
 from .XuleContext import XuleGlobalContext, XuleRuleContext  # XuleContext
@@ -525,7 +525,7 @@ def evaluate(rule_part, xule_context, trace_dependent=False, override_table_id=N
     """
     if xule_context.iter_count > xule_context.global_context.maximum_iterations:
         raise XuleProcessingError('Rule has run too many iterations')
-    
+
     try:
         # Setup trace information.
         if getattr(xule_context.global_context.options, "xule_trace", False) or getattr(
@@ -990,13 +990,17 @@ def evaluate_output_rule(output_rule, xule_context):
                     messages['severity'] = 'info'
                 severity = messages['severity']
                 # message - this is the main message
-                main_message = messages.get('message', xule_value)
+
+                # Check if there is an instane output. If so, then don't produce a message unless there is an explicit "message" output.
+                #has_instance_output = process_instance_output(xule_context, messages)
+                main_message = messages.get('message', xule_value) # This will default the message to the value of the rule.
                 if main_message.type == 'string':
                     main_message = main_message.value
                 else:
                     main_message = main_message.format_value()
 
                 messages.pop('message', None)
+            
 
                 full_rule_name = xule_context.rule_name
                 # Handle rule suffix
@@ -4513,8 +4517,8 @@ def process_factset_aspects(factset, xule_context):
                 # This is a concept aspect and the filter name is really the aspect value (i.e. @Assets)
                 if aspect_in_filters('builtin', 'concept', aspect_dictionary):
                     raise XuleProcessingError(_(
-                        "The factset specifies the concept aspect as both @{0} and @concept={0}. Only one method should be used".format(
-                            aspect_name.value)), xule_context)
+                        "The factset specifies the concept aspect as both @{0} and @concept={0}. Only one method should be used. Is dimension={1}. Sub Group={2}".format(
+                            aspect_name.value, aspect_filter_model_concept.isDimensionItem, aspect_filter_model_concept.substitutionGroup)), xule_context)
                 alternate_notation = True  # Indicate that the concept aspect is provided
                 aspect_dictionary[('builtin', 'concept', None, '=', None)] = aspect_name
                 add_aspect_var(aspect_vars, 'builtin', 'concept', aspect_var_name, aspect_filter['node_id'],

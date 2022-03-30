@@ -5,7 +5,7 @@ Xule is a rule processor for XBRL (X)brl r(ULE).
 DOCSKIP
 See https://xbrl.us/dqc-license for license information.  
 See https://xbrl.us/dqc-patent for patent infringement notice.
-Copyright (c) 2017 - 2021 XBRL US, Inc.
+Copyright (c) 2017 - 2022 XBRL US, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-$Change: 23301 $
+$Change: 23339 $
 DOCSKIP
 """
 from arelle.ModelRelationshipSet import ModelRelationshipSet
@@ -254,7 +254,7 @@ def determine_rule_set(model_xbrl, cntlr, rule_set_map_name):
     """
     # Open the rule set map file. This is a json file that maps namespace uris to a location for a rule set.
     rule_set_map = get_rule_set_map(cntlr, rule_set_map_name)
-    
+
     if rule_set_map is not None:
         # Go through the list of namespaces in the rule set map
         for mapped_namespace, rule_set_location in rule_set_map.items():
