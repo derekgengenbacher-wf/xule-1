@@ -8,7 +8,7 @@ for keeping track of the processing (including the iterations that are created w
 DOCSKIP
 See https://xbrl.us/dqc-license for license information.  
 See https://xbrl.us/dqc-patent for patent infringement notice.
-Copyright (c) 2017 - 2021 XBRL US, Inc.
+Copyright (c) 2017 - 2022 XBRL US, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -216,7 +216,7 @@ class XuleGlobalContext(object):
         self.expression_trace = dict()
         self.other_taxonomies = dict()
         self.maximum_iterations = max(getattr(self.options, "xule_max_rule_iterations", 10000), len(model_xbrl.factsInInstance))
-        
+
         # Set up various queues
         self.message_queue = XuleMessageQueue(self.model, getattr(self.options, "xule_multi", False), getattr(self.options, "xule_async", False), cid=id(self.cntlr))
         self.calc_constants_queue = Queue()

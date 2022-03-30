@@ -7,7 +7,7 @@ This is the package init file.
 DOCSKIP
 See https://xbrl.us/dqc-license for license information.  
 See https://xbrl.us/dqc-patent for patent infringement notice.
-Copyright (c) 2017 - 2021 XBRL US, Inc.
+Copyright (c) 2017 - 2022 XBRL US, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-$Change: 23217 $
+$Change: 23339 $
 DOCSKIP
 """
 from .XuleProcessor import process_xule
@@ -457,7 +457,7 @@ def xuleCmdOptions(parser):
         default=10000,
         help=_("The maximum amount of iterations any xule rule should be allowed to run.")
     )
-    
+
     parserGroup.add_option("--xule-arg",
                           action="append",
                           dest="xule_arg",
@@ -866,8 +866,7 @@ def xuleCompile(xule_file_names, ruleset_file_name, compile_type, max_recurse_de
 
 def runXule(cntlr, options, modelXbrl, rule_set_map=_xule_rule_set_map_name):
         try:
-            if getattr(options, "xule_multi", True) and \
-                getattr(cntlr, "rule_set", None) is not None:
+            if getattr(options, "xule_multi", True) and getattr(cntlr, "rule_set", None) is not None:
                 rule_set = getattr(cntlr, "rule_set")
             else:
                 if getattr(options, 'xule_rule_set', None) is not None:
@@ -875,14 +874,14 @@ def runXule(cntlr, options, modelXbrl, rule_set_map=_xule_rule_set_map_name):
                 else:
                     # Determine the rule set from the model.
                     rule_set_location = xu.determine_rule_set(modelXbrl, cntlr, rule_set_map)
-                    modelXbrl.info('info', 'Using ruleset {}'.format(rule_set_location))
+                    modelXbrl.log('INFO', 'info', 'Using ruleset {}'.format(rule_set_location))
                     if rule_set_location is None:
                         raise xr.XuleRuleSetError(
                             "Cannot determine which rule set to use for the filing. Check the rule set map at '{}'.".format(
                                 xu.get_rule_set_map_file_name(cntlr, rule_set_map)
                             )
                         )
-                rule_set = xr.XuleRuleSet(cntlr)
+                rule_set = xr.XuleRuleSet(cntlr)              
                 rule_set.open(rule_set_location, open_packages=not getattr(options, 'xule_bypass_packages', False))
         except xr.XuleRuleCompatibilityError as err:
             modelXbrl.error(

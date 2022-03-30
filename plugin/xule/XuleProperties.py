@@ -5,7 +5,7 @@ Xule is a rule processor for XBRL (X)brl r(ULE).
 DOCSKIP
 See https://xbrl.us/dqc-license for license information.  
 See https://xbrl.us/dqc-patent for patent infringement notice.
-Copyright (c) 2017 - 2021 XBRL US, Inc.
+Copyright (c) 2017 - 2022 XBRL US, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ DOCSKIP
 
 from .XuleRunTime import XuleProcessingError
 from . import XuleValue as xv
-from . import XuleUtility
+from . import XuleUtility 
 from . import XuleFunctions
 from arelle.ModelDocument import Type
 #from arelle.ModelRelationshipSet import ModelRelationshipSet
@@ -857,7 +857,7 @@ def property_label(xule_context, object_value, *args):
         return xv.XuleValue(xule_context, None, 'none')
     else:
         return xv.XuleValue(xule_context, label, 'label')
-
+     
 def get_label(xule_context, concept, base_label_type, base_lang):
     #label_network = get_relationshipset(concept.modelXbrl, CONCEPT_LABEL)
     label_network = concept.modelXbrl.relationshipSet(CONCEPT_LABEL)
